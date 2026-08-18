@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusAI | CampusHub</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-icon">C</div>
+            <span>CampusHub</span>
+        </div>
+
+        <div class="profile">
+
+            <div class="notification">
+                🔔
+            </div>
+
+            <div class="avatar">
+                H
+            </div>
+
+            <div>
+                <strong>Himanshu</strong>
+                <small>Student</small>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <div class="app-layout">
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <a href="dashboard.html">
+                ● &nbsp; Dashboard
+            </a>
+
+            <a href="schedule.html">
+                ▣ &nbsp; Schedule
+            </a>
+
+            <a href="assignments.html">
+                ✓ &nbsp; Assignments
+            </a>
+
+            <a href="events.html">
+                ⚑ &nbsp; Events
+            </a>
+
+            <a href="resources.html">
+                ◉ &nbsp; Resources
+            </a>
+
+            <a href="ai-assistant.html" class="active">
+                ✦ &nbsp; AI Assistant
+            </a>
+
+        </aside>
+
+
+        <!-- MAIN -->
+
+        <main class="ai-main">
+
+
+            <!-- AI HEADER -->
+
+            <section class="ai-header">
+
+                <div class="ai-avatar">
+                    🤖
+                </div>
+
+                <div>
+
+                    <span class="eyebrow">
+                        CAMPUSHUB AI
+                    </span>
+
+                    <h1>
+                        Meet CampusAI
+                    </h1>
+
+                    <p>
+                        Your AI-powered college companion.
+                    </p>
+
+                </div>
+
+                <div class="online-status">
+                    <span></span>
+                    Online
+                </div>
+
+            </section>
+
+
+            <!-- CHAT AREA -->
+
+            <section class="chat-container">
+
+
+                <!-- WELCOME -->
+
+                <div class="ai-message">
+
+                    <div class="message-avatar">
+                        🤖
+                    </div>
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            CampusAI
+                        </div>
+
+                        <div class="message-bubble">
+
+                            Hey Himanshu 👋
+
+                            <br><br>
+
+                            I'm your CampusAI assistant. I can help you
+                            with your schedule, assignments, study
+                            planning, resources and campus life.
+
+                            <br><br>
+
+                            What can I help you with?
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUGGESTIONS -->
+
+                <div class="suggestions">
+
+                    <button class="suggestion">
+                        📅 What's my schedule today?
+                    </button>
+
+                    <button class="suggestion">
+                        📝 What assignments are due soon?
+                    </button>
+
+                    <button class="suggestion">
+                        📚 Help me find study resources
+                    </button>
+
+                    <button class="suggestion">
+                        🧠 Make me a study plan
+                    </button>
+
+                </div>
+
+
+                <!-- USER MESSAGE DEMO -->
+
+                <div class="user-message">
+
+                    <div class="user-bubble">
+                        How can you help me study?
+                    </div>
+
+                    <div class="user-avatar">
+                        H
+                    </div>
+
+                </div>
+
+
+                <!-- AI RESPONSE DEMO -->
+
+                <div class="ai-message">
+
+                    <div class="message-avatar">
+                        🤖
+                    </div>
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            CampusAI
+                        </div>
+
+                        <div class="message-bubble">
+
+                            I can help you build a study plan based on
+                            your classes and upcoming deadlines.
+
+                            <br><br>
+
+                            For example, I can break a difficult subject
+                            into smaller topics and create a daily plan
+                            for you.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- INPUT -->
+
+            <section class="chat-input-area">
+
+                <div class="chat-input-wrapper">
+
+                    <input
+                        type="text"
+                        id="chatInput"
+                        placeholder="Ask CampusAI anything..."
+                        autocomplete="off"
+                    >
+
+                    <button id="sendButton">
+                        ➤
+                    </button>
+
+                </div>
+
+                <small>
+                    CampusAI can make mistakes. Verify important information.
+                </small>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        const chatInput =
+            document.getElementById("chatInput");
+
+        const sendButton =
+            document.getElementById("sendButton");
+
+        const chatContainer =
+            document.querySelector(".chat-container");
+
+
+        function sendMessage() {
+
+            const message =
+                chatInput.value.trim();
+
+
+            if (message === "") {
+                return;
+            }
+
+
+            /* USER MESSAGE */
+
+            const userMessage =
+                document.createElement("div");
+
+            userMessage.className =
+                "user-message";
+
+
+            userMessage.innerHTML = `
+
+                <div class="user-bubble">
+                    ${message}
+                </div>
+
+                <div class="user-avatar">
+                    H
+                </div>
+
+            `;
+
+
+            chatContainer.appendChild(
+                userMessage
+            );
+
+
+            chatInput.value = "";
+
+
+            /* DEMO AI RESPONSE */
+
+            setTimeout(() => {
+
+                const aiMessage =
+                    document.createElement("div");
+
+                aiMessage.className =
+                    "ai-message";
+
+
+                aiMessage.innerHTML = `
+
+                    <div class="message-avatar">
+                        🤖
+                    </div>
+
+                    <div class="message-content">
+
+                        <div class="message-name">
+                            CampusAI
+                        </div>
+
+                        <div class="message-bubble">
+                            That's a great question! 🤖
+                            <br><br>
+                            I'm currently running in demo mode.
+                            Soon I'll be connected to a real AI
+                            backend and will be able to give you
+                            personalized answers.
+                        </div>
+
+                    </div>
+
+                `;
+
+
+                chatContainer.appendChild(
+                    aiMessage
+                );
+
+
+                chatContainer.scrollTop =
+                    chatContainer.scrollHeight;
+
+            }, 700);
+
+        }
+
+
+        sendButton.addEventListener(
+            "click",
+            sendMessage
+        );
+
+
+        chatInput.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+
+            }
+        );
+
+
+        /* SUGGESTION BUTTONS */
+
+        document
+            .querySelectorAll(".suggestion")
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        chatInput.value =
+                            button.textContent.trim();
+
+                        sendMessage();
+
+                    }
+                );
+
+            });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusHub | Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="dashboard-navbar">
+
+        <div class="dashboard-logo">
+            <div class="logo-icon">C</div>
+            <span>CampusHub</span>
+        </div>
+
+        <div class="dashboard-nav-right">
+            <button class="notification-btn">🔔</button>
+
+            <div class="profile">
+                <div class="profile-avatar">H</div>
+
+                <div>
+                    <strong>Himanshu</strong>
+                    <small>Student</small>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN LAYOUT ================= -->
+
+    <div class="dashboard-layout">
+
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <nav>
+
+                <a href="#" class="sidebar-link active">
+                    <span>⌂</span>
+                    Dashboard
+                </a>
+
+                <a href="schedule.html" class="sidebar-link">
+                    <span>📅</span>
+                    Schedule
+                </a>
+
+                <a href="assignments.html" class="sidebar-link">
+                    <span>✓</span>
+                    Assignments
+                </a>
+
+                <a href="events.html" class="sidebar-link">
+                    <span>🎯</span>
+                    Events
+                </a>
+
+                <a href="#" class="sidebar-link">
+                    <span>📚</span>
+                    Resources
+                </a>
+
+                <a href="#" class="sidebar-link">
+                    <span>🤖</span>
+                    AI Assistant
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="#" class="sidebar-link">
+                    <span>⚙</span>
+                    Settings
+                </a>
+
+                <a href="#" class="sidebar-link">
+                    <span>↪</span>
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= DASHBOARD CONTENT ================= -->
+
+        <main class="dashboard-content">
+
+            <!-- Welcome -->
+
+            <section class="welcome-section">
+
+                <div>
+
+                    <p class="eyebrow">STUDENT DASHBOARD</p>
+
+                    <h1>
+                        Good morning, Himanshu 👋
+                    </h1>
+
+                    <p>
+                        Here's what's happening on your campus today.
+                    </p>
+
+                </div>
+
+                <button class="ai-button">
+                    ✨ Ask CampusAI
+                </button>
+
+            </section>
+
+
+            <!-- ================= STATS ================= -->
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">📚</div>
+
+                    <div>
+                        <span>Today's Classes</span>
+                        <h2>04</h2>
+                        <small>2 completed</small>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">📝</div>
+
+                    <div>
+                        <span>Assignments</span>
+                        <h2>07</h2>
+                        <small>3 due this week</small>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">🎯</div>
+
+                    <div>
+                        <span>Upcoming Events</span>
+                        <h2>03</h2>
+                        <small>Next: Tomorrow</small>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= LOWER GRID ================= -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- UPCOMING CLASSES -->
+
+                <div class="dashboard-card classes-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <span class="card-label">TODAY</span>
+                            <h2>Upcoming Classes</h2>
+                        </div>
+
+                        <a href="#">View all →</a>
+
+                    </div>
+
+
+                    <div class="class-list">
+
+                        <div class="class-item">
+
+                            <div class="class-time">
+                                <strong>09:30</strong>
+                                <span>AM</span>
+                            </div>
+
+                            <div class="class-info">
+                                <strong>Data Structures</strong>
+                                <span>Room 204 • Prof. Sharma</span>
+                            </div>
+
+                            <div class="class-dot purple"></div>
+
+                        </div>
+
+
+                        <div class="class-item">
+
+                            <div class="class-time">
+                                <strong>12:00</strong>
+                                <span>PM</span>
+                            </div>
+
+                            <div class="class-info">
+                                <strong>Database Systems</strong>
+                                <span>Lab 3 • Prof. Mehta</span>
+                            </div>
+
+                            <div class="class-dot blue"></div>
+
+                        </div>
+
+
+                        <div class="class-item">
+
+                            <div class="class-time">
+                                <strong>03:30</strong>
+                                <span>PM</span>
+                            </div>
+
+                            <div class="class-info">
+                                <strong>Project Meeting</strong>
+                                <span>Innovation Hub</span>
+                            </div>
+
+                            <div class="class-dot orange"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ASSIGNMENTS -->
+
+                <div class="dashboard-card assignments-card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <span class="card-label">DEADLINES</span>
+                            <h2>Assignments</h2>
+                        </div>
+
+                        <a href="#">View all →</a>
+
+                    </div>
+
+
+                    <div class="assignment-list">
+
+
+                        <div class="assignment">
+
+                            <div class="assignment-icon">DS</div>
+
+                            <div class="assignment-info">
+
+                                <strong>Data Structures Lab</strong>
+
+                                <span>Due tomorrow</span>
+
+                            </div>
+
+                            <span class="priority high">
+                                High
+                            </span>
+
+                        </div>
+
+
+                        <div class="assignment">
+
+                            <div class="assignment-icon">DB</div>
+
+                            <div class="assignment-info">
+
+                                <strong>SQL Database Project</strong>
+
+                                <span>Due Friday</span>
+
+                            </div>
+
+                            <span class="priority medium">
+                                Medium
+                            </span>
+
+                        </div>
+
+
+                        <div class="assignment">
+
+                            <div class="assignment-icon">OS</div>
+
+                            <div class="assignment-info">
+
+                                <strong>Operating Systems Report</strong>
+
+                                <span>Due next week</span>
+
+                            </div>
+
+                            <span class="priority low">
+                                Low
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- ================= AI SECTION ================= -->
+
+            <section class="ai-card">
+
+                <div class="ai-content">
+
+                    <span class="ai-badge">
+                        ✨ CAMPUS AI
+                    </span>
+
+                    <h2>
+                        Need help with your college life?
+                    </h2>
+
+                    <p>
+                        Ask CampusAI about your schedule, assignments,
+                        events, resources or anything related to campus.
+                    </p>
+
+                    <button class="ai-main-button">
+                        Start chatting →
+                    </button>
+
+                </div>
+
+                <div class="ai-visual">
+                    🤖
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+<script>
+    const scheduleData = {
+
+        Monday: [
+            {
+                time: "09:30 AM",
+                subject: "Data Structures",
+                professor: "Prof. Sharma",
+                room: "Room 204",
+                type: "Lecture"
+            },
+            {
+                time: "12:00 PM",
+                subject: "Database Systems",
+                professor: "Prof. Mehta",
+                room: "Lab 3",
+                type: "Practical"
+            },
+            {
+                time: "03:30 PM",
+                subject: "Project Meeting",
+                professor: "Innovation Hub",
+                room: "Room 101",
+                type: "Meeting"
+            }
+        ],
+
+        Tuesday: [
+            {
+                time: "10:00 AM",
+                subject: "Operating Systems",
+                professor: "Prof. Verma",
+                room: "Room 305",
+                type: "Lecture"
+            },
+            {
+                time: "01:00 PM",
+                subject: "Computer Networks",
+                professor: "Prof. Singh",
+                room: "Room 201",
+                type: "Lecture"
+            },
+            {
+                time: "04:00 PM",
+                subject: "Java Programming",
+                professor: "Prof. Patel",
+                room: "Lab 2",
+                type: "Practical"
+            }
+        ],
+
+        Wednesday: [
+            {
+                time: "09:00 AM",
+                subject: "Database Systems",
+                professor: "Prof. Mehta",
+                room: "Room 204",
+                type: "Lecture"
+            },
+            {
+                time: "11:30 AM",
+                subject: "Web Development",
+                professor: "Prof. Sharma",
+                room: "Lab 1",
+                type: "Practical"
+            },
+            {
+                time: "02:30 PM",
+                subject: "Software Engineering",
+                professor: "Prof. Gupta",
+                room: "Room 302",
+                type: "Lecture"
+            }
+        ],
+
+        Thursday: [
+            {
+                time: "10:00 AM",
+                subject: "Computer Networks",
+                professor: "Prof. Singh",
+                room: "Room 205",
+                type: "Lecture"
+            },
+            {
+                time: "01:30 PM",
+                subject: "Data Structures Lab",
+                professor: "Prof. Sharma",
+                room: "Lab 4",
+                type: "Practical"
+            }
+        ],
+
+        Friday: [
+            {
+                time: "09:30 AM",
+                subject: "Operating Systems",
+                professor: "Prof. Verma",
+                room: "Room 204",
+                type: "Lecture"
+            },
+            {
+                time: "12:00 PM",
+                subject: "Java Programming",
+                professor: "Prof. Patel",
+                room: "Lab 2",
+                type: "Practical"
+            },
+            {
+                time: "03:00 PM",
+                subject: "Project Work",
+                professor: "Innovation Hub",
+                room: "Room 101",
+                type: "Project"
+            }
+        ],
+
+        Saturday: [
+            {
+                time: "10:00 AM",
+                subject: "Software Engineering",
+                professor: "Prof. Gupta",
+                room: "Room 301",
+                type: "Lecture"
+            },
+            {
+                time: "12:30 PM",
+                subject: "Web Development",
+                professor: "Prof. Sharma",
+                room: "Lab 1",
+                type: "Practical"
+            }
+        ]
+    };
+
+
+    const days = document.querySelectorAll(".day");
+    const scheduleCard = document.querySelector(".schedule-card");
+
+
+    function showSchedule(dayName) {
+
+        const classes = scheduleData[dayName];
+
+        scheduleCard.innerHTML = `
+
+            <div class="schedule-header">
+
+                <h2>${dayName}'s Classes</h2>
+
+                <div class="today">
+                    ${classes.length} classes today
+                </div>
+
+            </div>
+
+            ${classes.map(classItem => `
+
+                <div class="class-row">
+
+                    <div class="time">
+                        ${classItem.time}
+                    </div>
+
+                    <div>
+
+                        <div class="subject">
+                            ${classItem.subject}
+                        </div>
+
+                        <div class="professor">
+                            ${classItem.professor}
+                        </div>
+
+                    </div>
+
+                    <div class="room">
+
+                        <strong>
+                            ${classItem.room}
+                        </strong>
+
+                        ${classItem.type}
+
+                    </div>
+
+                </div>
+
+            `).join("")}
+        `;
+    }
+
+
+    days.forEach((day, index) => {
+
+        day.addEventListener("click", () => {
+
+            days.forEach(item => {
+                item.classList.remove("active");
+            });
+
+            day.classList.add("active");
+
+
+            const dayNames = [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ];
+
+            showSchedule(dayNames[index]);
+
+        });
+
+    });
+
+</script>
+</body>
+</html>

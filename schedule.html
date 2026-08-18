@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Schedule | CampusHub</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #090914;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        .topbar {
+            height: 72px;
+            padding: 0 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(12, 12, 25, 0.95);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .logo-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #6d5dfc, #a855f7);
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #60a5fa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* LAYOUT */
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 72px);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 230px;
+            padding: 30px 18px;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            background: #0d0d1b;
+        }
+
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: #aaa9bd;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover {
+            color: white;
+            background: rgba(139, 92, 246, 0.15);
+        }
+
+        .sidebar a.active {
+            color: white;
+            background: linear-gradient(
+                135deg,
+                rgba(109,93,252,0.8),
+                rgba(168,85,247,0.55)
+            );
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 45px;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(91, 33, 182, 0.35),
+                    transparent 35%
+                );
+        }
+
+        .page-label {
+            color: #a78bfa;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #aaa9bd;
+            margin-bottom: 35px;
+        }
+
+        /* DAY SELECTOR */
+        .days {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .day {
+            min-width: 105px;
+            padding: 15px 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.04);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .day span {
+            display: block;
+            color: #aaa9bd;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .day strong {
+            font-size: 15px;
+        }
+
+        .day.active {
+            background: linear-gradient(135deg, #6d5dfc, #8b5cf6);
+            border-color: transparent;
+        }
+
+        .day.active span {
+            color: #ddd6fe;
+        }
+
+        /* SCHEDULE CARD */
+        .schedule-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 22px;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+        }
+
+        .schedule-header {
+            padding: 22px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .schedule-header h2 {
+            font-size: 20px;
+        }
+
+        .today {
+            color: #a78bfa;
+            font-size: 13px;
+        }
+
+        /* CLASS */
+        .class-row {
+            display: grid;
+            grid-template-columns: 110px 1fr 130px;
+            align-items: center;
+            gap: 20px;
+            padding: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .class-row:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            color: #c4b5fd;
+            font-weight: bold;
+        }
+
+        .subject {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .professor {
+            color: #aaa9bd;
+            font-size: 13px;
+        }
+
+        .room {
+            text-align: right;
+            color: #aaa9bd;
+            font-size: 13px;
+        }
+
+        .room strong {
+            display: block;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 75px;
+                padding: 20px 10px;
+            }
+
+            .sidebar a {
+                font-size: 0;
+                text-align: center;
+            }
+
+            .sidebar a::first-letter {
+                font-size: 20px;
+            }
+
+            .main {
+                padding: 25px 18px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .class-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .room {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+
+        <div class="logo">
+            <div class="logo-box">C</div>
+            CampusHub
+        </div>
+
+        <div class="profile">
+            <div class="avatar">H</div>
+            <div>
+                <strong>Himanshu</strong>
+                <small style="display:block;color:#aaa9bd;">Student</small>
+            </div>
+        </div>
+
+    </header>
+
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <a href="dashboard.html">● Dashboard</a>
+
+            <a href="schedule.html" class="active">▣ Schedule</a>
+
+            <a href="#">✓ Assignments</a>
+
+            <a href="#">⚑ Events</a>
+
+            <a href="#">◉ Resources</a>
+
+            <a href="#">✦ AI Assistant</a>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+
+            <div class="page-label">
+                Academic Planner
+            </div>
+
+            <h1>My Schedule 📅</h1>
+
+            <p class="subtitle">
+                Keep track of your classes, rooms and professors.
+            </p>
+
+
+            <!-- DAYS -->
+            <div class="days">
+
+                <div class="day active">
+                    <span>MON</span>
+                    <strong>18 Aug</strong>
+                </div>
+
+                <div class="day">
+                    <span>TUE</span>
+                    <strong>19 Aug</strong>
+                </div>
+
+                <div class="day">
+                    <span>WED</span>
+                    <strong>20 Aug</strong>
+                </div>
+
+                <div class="day">
+                    <span>THU</span>
+                    <strong>21 Aug</strong>
+                </div>
+
+                <div class="day">
+                    <span>FRI</span>
+                    <strong>22 Aug</strong>
+                </div>
+
+                <div class="day">
+                    <span>SAT</span>
+                    <strong>23 Aug</strong>
+                </div>
+
+            </div>
+
+
+            <!-- SCHEDULE -->
+            <section class="schedule-card">
+
+                <div class="schedule-header">
+
+                    <h2>Monday's Classes</h2>
+
+                    <div class="today">
+                        3 classes today
+                    </div>
+
+                </div>
+
+
+                <!-- CLASS 1 -->
+                <div class="class-row">
+
+                    <div class="time">
+                        09:30 AM
+                    </div>
+
+                    <div>
+                        <div class="subject">
+                            Data Structures
+                        </div>
+
+                        <div class="professor">
+                            Prof. Sharma
+                        </div>
+                    </div>
+
+                    <div class="room">
+                        <strong>Room 204</strong>
+                        Lecture
+                    </div>
+
+                </div>
+
+
+                <!-- CLASS 2 -->
+                <div class="class-row">
+
+                    <div class="time">
+                        12:00 PM
+                    </div>
+
+                    <div>
+                        <div class="subject">
+                            Database Systems
+                        </div>
+
+                        <div class="professor">
+                            Prof. Mehta
+                        </div>
+                    </div>
+
+                    <div class="room">
+                        <strong>Lab 3</strong>
+                        Practical
+                    </div>
+
+                </div>
+
+
+                <!-- CLASS 3 -->
+                <div class="class-row">
+
+                    <div class="time">
+                        03:30 PM
+                    </div>
+
+                    <div>
+                        <div class="subject">
+                            Project Meeting
+                        </div>
+
+                        <div class="professor">
+                            Innovation Hub
+                        </div>
+                    </div>
+
+                    <div class="room">
+                        <strong>Room 101</strong>
+                        Meeting
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+<script>
+    const scheduleData = {
+
+        Monday: [
+            {
+                time: "09:30 AM",
+                subject: "Data Structures",
+                professor: "Prof. Sharma",
+                room: "Room 204",
+                type: "Lecture"
+            },
+            {
+                time: "12:00 PM",
+                subject: "Database Systems",
+                professor: "Prof. Mehta",
+                room: "Lab 3",
+                type: "Practical"
+            },
+            {
+                time: "03:30 PM",
+                subject: "Project Meeting",
+                professor: "Innovation Hub",
+                room: "Room 101",
+                type: "Meeting"
+            }
+        ],
+
+        Tuesday: [
+            {
+                time: "10:00 AM",
+                subject: "Operating Systems",
+                professor: "Prof. Verma",
+                room: "Room 305",
+                type: "Lecture"
+            },
+            {
+                time: "01:00 PM",
+                subject: "Computer Networks",
+                professor: "Prof. Singh",
+                room: "Room 201",
+                type: "Lecture"
+            },
+            {
+                time: "04:00 PM",
+                subject: "Java Programming",
+                professor: "Prof. Patel",
+                room: "Lab 2",
+                type: "Practical"
+            }
+        ],
+
+        Wednesday: [
+            {
+                time: "09:00 AM",
+                subject: "Database Systems",
+                professor: "Prof. Mehta",
+                room: "Room 204",
+                type: "Lecture"
+            },
+            {
+                time: "11:30 AM",
+                subject: "Web Development",
+                professor: "Prof. Sharma",
+                room: "Lab 1",
+                type: "Practical"
+            },
+            {
+                time: "02:30 PM",
+                subject: "Software Engineering",
+                professor: "Prof. Gupta",
+                room: "Room 302",
+                type: "Lecture"
+            }
+        ],
+
+        Thursday: [
+            {
+                time: "10:00 AM",
+                subject: "Computer Networks",
+                professor: "Prof. Singh",
+                room: "Room 205",
+                type: "Lecture"
+            },
+            {
+                time: "01:30 PM",
+                subject: "Data Structures Lab",
+                professor: "Prof. Sharma",
+                room: "Lab 4",
+                type: "Practical"
+            }
+        ],
+
+        Friday: [
+            {
+                time: "09:30 AM",
+                subject: "Operating Systems",
+                professor: "Prof. Verma",
+                room: "Room 204",
+                type: "Lecture"
+            },
+            {
+                time: "12:00 PM",
+                subject: "Java Programming",
+                professor: "Prof. Patel",
+                room: "Lab 2",
+                type: "Practical"
+            },
+            {
+                time: "03:00 PM",
+                subject: "Project Work",
+                professor: "Innovation Hub",
+                room: "Room 101",
+                type: "Project"
+            }
+        ],
+
+        Saturday: [
+            {
+                time: "10:00 AM",
+                subject: "Software Engineering",
+                professor: "Prof. Gupta",
+                room: "Room 301",
+                type: "Lecture"
+            },
+            {
+                time: "12:30 PM",
+                subject: "Web Development",
+                professor: "Prof. Sharma",
+                room: "Lab 1",
+                type: "Practical"
+            }
+        ]
+    };
+
+
+    const days = document.querySelectorAll(".day");
+    const scheduleCard = document.querySelector(".schedule-card");
+
+
+    function showSchedule(dayName) {
+
+        const classes = scheduleData[dayName];
+
+        scheduleCard.innerHTML = `
+
+            <div class="schedule-header">
+
+                <h2>${dayName}'s Classes</h2>
+
+                <div class="today">
+                    ${classes.length} classes today
+                </div>
+
+            </div>
+
+            ${classes.map(classItem => `
+
+                <div class="class-row">
+
+                    <div class="time">
+                        ${classItem.time}
+                    </div>
+
+                    <div>
+
+                        <div class="subject">
+                            ${classItem.subject}
+                        </div>
+
+                        <div class="professor">
+                            ${classItem.professor}
+                        </div>
+
+                    </div>
+
+                    <div class="room">
+
+                        <strong>
+                            ${classItem.room}
+                        </strong>
+
+                        ${classItem.type}
+
+                    </div>
+
+                </div>
+
+            `).join("")}
+        `;
+    }
+
+
+    days.forEach((day, index) => {
+
+        day.addEventListener("click", () => {
+
+            days.forEach(item => {
+                item.classList.remove("active");
+            });
+
+            day.classList.add("active");
+
+
+            const dayNames = [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ];
+
+            showSchedule(dayNames[index]);
+
+        });
+
+    });
+
+</script>
+</body>
+</html>
