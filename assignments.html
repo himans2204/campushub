@@ -321,6 +321,18 @@
             color: white;
         }
 
+        .complete-btn:disabled {
+            background: #22c55e;
+            color: white;
+            cursor: not-allowed;
+            opacity: 0.75;
+        }
+
+        .complete-btn:disabled:hover {
+            background: #22c55e;
+            color: white;
+        }
+
         .completed {
             opacity: 0.5;
         }
@@ -522,9 +534,13 @@
     <!-- JAVASCRIPT -->
 
     <script>
+        const API_URL = "http://localhost:5001/api/assignments";
 
-        const buttons =
-            document.querySelectorAll(".complete-btn");
+        const assignmentsList =
+            document.getElementById("assignments-list");
+
+        const totalCount =
+            document.getElementById("totalCount");
 
         const pendingCount =
             document.getElementById("pendingCount");
@@ -532,136 +548,181 @@
         const completedCount =
             document.getElementById("completedCount");
 
-
-        buttons.forEach(button => {
-
-            button.addEventListener("click", () => {
-
-                const assignment =
-                    button.closest(".assignment");
+        let assignmentsState = [];
 
 
-                if (!assignment.classList.contains("completed")) {
-
-                    assignment.classList.add("completed");
-
-                    button.textContent = "Completed ✓";
-
-                    button.style.background = "#22c55e";
-
-                    button.style.color = "white";
+        function formatCount(count) {
+            return String(count).padStart(2, "0");
+        }
 
 
-                    let pending =
-                        Number(pendingCount.textContent);
+        function updateStats(assignments) {
+            const completed =
+                assignments.filter(assignment => assignment.completed).length;
 
-                    let completed =
-                        Number(completedCount.textContent);
+            totalCount.textContent =
+                formatCount(assignments.length);
+
+            pendingCount.textContent =
+                formatCount(assignments.length - completed);
+
+            completedCount.textContent =
+                formatCount(completed);
+        }
 
 
-                    pendingCount.textContent =
-                        String(pending - 1).padStart(2, "0");
+        function createTextElement(className, text) {
+            const element =
+                document.createElement("div");
 
-                    completedCount.textContent =
-                        String(completed + 1).padStart(2, "0");
+            element.className = className;
+            element.textContent = text;
 
-                }
+            return element;
+        }
 
+
+        function renderAssignments(assignments) {
+            assignmentsList.innerHTML = "";
+
+            assignments.forEach(assignment => {
+                const card =
+                    document.createElement("div");
+
+                card.className =
+                    assignment.completed ? "assignment completed" : "assignment";
+
+                const details =
+                    document.createElement("div");
+
+                details.appendChild(
+                    createTextElement("assignment-title", assignment.title)
+                );
+
+                details.appendChild(
+                    createTextElement("subject", assignment.subject)
+                );
+
+                const due =
+                    createTextElement("due", assignment.due);
+
+                const priorityWrapper =
+                    document.createElement("div");
+
+                const priorityBadge =
+                    document.createElement("span");
+
+                priorityBadge.className =
+                    `badge ${assignment.priority.toLowerCase()}`;
+
+                priorityBadge.textContent =
+                    assignment.priority;
+
+                priorityWrapper.appendChild(priorityBadge);
+
+                const button =
+                    document.createElement("button");
+
+                button.className = "complete-btn";
+                button.dataset.id = assignment.id;
+                button.textContent =
+                    assignment.completed ? "Completed" : "Complete";
+                button.disabled = assignment.completed;
+
+                card.appendChild(details);
+                card.appendChild(due);
+                card.appendChild(priorityWrapper);
+                card.appendChild(button);
+
+                assignmentsList.appendChild(card);
             });
-
-        });
-
-    </script>
-
-<script>
-async function loadAssignments() {
-    try {
-        const response = await fetch("http://localhost:5001/api/assignments");
-
-        if (!response.ok) {
-            throw new Error("Failed to load assignments");
         }
 
-        const assignments = await response.json();
 
-        console.log("Assignments from backend:", assignments);
+        async function loadAssignments() {
+            try {
+                const response =
+                    await fetch(API_URL);
 
-        const container = document.getElementById("assignments-list");
-
-        container.innerHTML = "";
-
-        assignments.forEach(assignment => {
-            const card = document.createElement("div");
-
-            card.className = "assignment";
-
-            card.innerHTML = `
-                <div>
-                    <div class="assignment-title">
-                        ${assignment.title}
-                    </div>
-
-                    <div class="subject">
-                        ${assignment.subject}
-                    </div>
-                </div>
-
-                <div class="due">
-                    ${assignment.due}
-                </div>
-
-                <div>
-                    <span class="badge ${assignment.priority.toLowerCase()}">
-                        ${assignment.priority}
-                    </span>
-                </div>
-
-                <button <button class="complete-btn" onclick="completeAssignment(${assignment.id}, this)">
-    Complete
-</button>
-                </button>
-            `;
-
-            container.appendChild(card);
-        });
-
-    } catch (error) {
-        console.error("Error loading assignments:", error);
-    }
-}
-async function completeAssignment(id, button) {
-    try {
-        const response = await fetch(
-            `http://localhost:5001/api/assignments/${id}`,
-            {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
+                if (!response.ok) {
+                    throw new Error("Failed to load assignments");
                 }
+
+                assignmentsState =
+                    await response.json();
+
+                renderAssignments(assignmentsState);
+                updateStats(assignmentsState);
+            } catch (error) {
+                console.error("Error loading assignments:", error);
+                assignmentsList.innerHTML =
+                    "<p style=\"padding:22px 25px;color:#fca5a5;\">Could not load assignments.</p>";
             }
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.message || "Failed to complete assignment");
         }
 
-        button.textContent = "Completed";
-        button.disabled = true;
 
-        button.style.opacity = "0.6";
-        button.style.cursor = "not-allowed";
+        async function completeAssignment(id, button) {
+            const originalText =
+                button.textContent;
 
-        console.log("Backend response:", data);
+            button.disabled = true;
+            button.textContent = "Saving...";
 
-    } catch (error) {
-        console.error("Error completing assignment:", error);
-        alert("Could not complete assignment.");
-    }
-}
-loadAssignments();
-</script>
+            try {
+                const response =
+                    await fetch(`${API_URL}/${id}`, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    });
+
+                const data =
+                    await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || "Failed to complete assignment");
+                }
+
+                assignmentsState =
+                    assignmentsState.map(assignment => {
+                        if (assignment.id !== id) {
+                            return assignment;
+                        }
+
+                        return data.assignment || {
+                            ...assignment,
+                            completed: true
+                        };
+                    });
+
+                renderAssignments(assignmentsState);
+                updateStats(assignmentsState);
+            } catch (error) {
+                console.error("Error completing assignment:", error);
+
+                button.disabled = false;
+                button.textContent = originalText;
+
+                alert("Could not complete assignment.");
+            }
+        }
+
+
+        assignmentsList.addEventListener("click", event => {
+            const button =
+                event.target.closest(".complete-btn");
+
+            if (!button || button.disabled) {
+                return;
+            }
+
+            completeAssignment(Number(button.dataset.id), button);
+        });
+
+
+        loadAssignments();
+    </script>
 </body>
 
 </html>
