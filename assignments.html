@@ -509,148 +509,7 @@
                 </div>
 
 
-                <!-- ASSIGNMENT 1 -->
-
-                <div class="assignment">
-
-                    <div>
-
-                        <div class="assignment-title">
-                            Data Structures Lab
-                        </div>
-
-                        <div class="subject">
-                            Data Structures
-                        </div>
-
-                    </div>
-
-
-                    <div class="due">
-                        Due Tomorrow
-                    </div>
-
-
-                    <div>
-                        <span class="badge high">
-                            High
-                        </span>
-                    </div>
-
-
-                    <button class="complete-btn">
-                        Complete
-                    </button>
-
-                </div>
-
-
-                <!-- ASSIGNMENT 2 -->
-
-                <div class="assignment">
-
-                    <div>
-
-                        <div class="assignment-title">
-                            SQL Database Project
-                        </div>
-
-                        <div class="subject">
-                            Database Systems
-                        </div>
-
-                    </div>
-
-
-                    <div class="due">
-                        Due Friday
-                    </div>
-
-
-                    <div>
-                        <span class="badge medium">
-                            Medium
-                        </span>
-                    </div>
-
-
-                    <button class="complete-btn">
-                        Complete
-                    </button>
-
-                </div>
-
-
-                <!-- ASSIGNMENT 3 -->
-
-                <div class="assignment">
-
-                    <div>
-
-                        <div class="assignment-title">
-                            Operating Systems Report
-                        </div>
-
-                        <div class="subject">
-                            Operating Systems
-                        </div>
-
-                    </div>
-
-
-                    <div class="due">
-                        Due Next Week
-                    </div>
-
-
-                    <div>
-                        <span class="badge low">
-                            Low
-                        </span>
-                    </div>
-
-
-                    <button class="complete-btn">
-                        Complete
-                    </button>
-
-                </div>
-
-
-                <!-- ASSIGNMENT 4 -->
-
-                <div class="assignment">
-
-                    <div>
-
-                        <div class="assignment-title">
-                            Computer Networks Assignment
-                        </div>
-
-                        <div class="subject">
-                            Computer Networks
-                        </div>
-
-                    </div>
-
-
-                    <div class="due">
-                        Due Monday
-                    </div>
-
-
-                    <div>
-                        <span class="badge medium">
-                            Medium
-                        </span>
-                    </div>
-
-
-                    <button class="complete-btn">
-                        Complete
-                    </button>
-
-                </div>
+               <div id="assignments-list"></div>
 
 
             </section>
@@ -714,6 +573,95 @@
 
     </script>
 
+<script>
+async function loadAssignments() {
+    try {
+        const response = await fetch("http://localhost:5001/api/assignments");
+
+        if (!response.ok) {
+            throw new Error("Failed to load assignments");
+        }
+
+        const assignments = await response.json();
+
+        console.log("Assignments from backend:", assignments);
+
+        const container = document.getElementById("assignments-list");
+
+        container.innerHTML = "";
+
+        assignments.forEach(assignment => {
+            const card = document.createElement("div");
+
+            card.className = "assignment";
+
+            card.innerHTML = `
+                <div>
+                    <div class="assignment-title">
+                        ${assignment.title}
+                    </div>
+
+                    <div class="subject">
+                        ${assignment.subject}
+                    </div>
+                </div>
+
+                <div class="due">
+                    ${assignment.due}
+                </div>
+
+                <div>
+                    <span class="badge ${assignment.priority.toLowerCase()}">
+                        ${assignment.priority}
+                    </span>
+                </div>
+
+                <button <button class="complete-btn" onclick="completeAssignment(${assignment.id}, this)">
+    Complete
+</button>
+                </button>
+            `;
+
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Error loading assignments:", error);
+    }
+}
+async function completeAssignment(id, button) {
+    try {
+        const response = await fetch(
+            `http://localhost:5001/api/assignments/${id}`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Failed to complete assignment");
+        }
+
+        button.textContent = "Completed";
+        button.disabled = true;
+
+        button.style.opacity = "0.6";
+        button.style.cursor = "not-allowed";
+
+        console.log("Backend response:", data);
+
+    } catch (error) {
+        console.error("Error completing assignment:", error);
+        alert("Could not complete assignment.");
+    }
+}
+loadAssignments();
+</script>
 </body>
 
 </html>
